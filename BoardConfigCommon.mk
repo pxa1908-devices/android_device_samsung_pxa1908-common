@@ -17,7 +17,10 @@
 
 COMMON_PATH := device/samsung/pxa1908-common
 
-include $(COMMON_PATH)/board/*.mk
+# Treble & Legacy HAL compatibility
+PRODUCT_FULL_TREBLE_OVERRIDE := false
+PROPERTY_PERMISSIONS_SPLIT := false
+USE_CAMERA_HAL_1 := true
 
 TARGET_SYSTEM_PROP := $(COMMON_PATH)/system.prop
 
