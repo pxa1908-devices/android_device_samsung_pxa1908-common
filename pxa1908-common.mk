@@ -246,8 +246,9 @@ PRODUCT_PACKAGES += \
     libgpucsc \
 
 # NFC
-#PRODUCT_PACKAGES += \
-    Nfc-nci \
+PRODUCT_PACKAGES += \
+	nfc_nci.bcm2079x.default \
+    NfcNci \
     Tag \
 
 # FMRadio
