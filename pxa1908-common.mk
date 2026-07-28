@@ -46,15 +46,11 @@ PRODUCT_PACKAGES += libstlport
 ############
 PRODUCT_PACKAGES += \
     libstlport \
-    libvndbnd \
     camera.stock \
     camera.mrvl \
     camera_client \
     Torch \
     #Snap \
-
-
-PRODUCT_PACKAGES += vndui
 
 # Data patterns
 PRODUCT_COPY_FILES += \
