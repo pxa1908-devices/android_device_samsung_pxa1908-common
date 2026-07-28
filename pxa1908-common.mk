@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/languages_full.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -33,24 +33,19 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     audio.primary.default \
     audio_policy.default \
+    audio.a2dp.default \
     audio.r_submix.default \
     audio.primary.mrvl \
-    audio.usb.default
+    audio.usb.default \
 
-ifneq ($(filter 7.%,$(PLATFORM_VERSION)),)
-PRODUCT_PACKAGES += \
-    audio.a2dp.default \
-    libstlport
-else
-PRODUCT_PACKAGES += \
-    audio.bluetooth.default
-endif
+PRODUCT_PACKAGES += libstlport
 
 # Camera
 ############
 ##  WIP  ###
 ############
 PRODUCT_PACKAGES += \
+    libstlport \
     libvndbnd \
     camera.stock \
     camera.mrvl \
@@ -158,9 +153,15 @@ PRODUCT_PACKAGES += \
     libMrvlOmx \
 
 # Shims
+# - libui_shim:      re-exports legacy GraphicBuffer/GraphicBufferMapper symbols
+# - libutils_shim:   re-exports legacy String16 constructors
+# - libwvm_shim:     re-exports legacy MediaBufferGroup ctor
+# - libbinder_shim:  pulls libbase into libvndbnd's resolution scope (Oreo fix)
 PRODUCT_PACKAGES += \
     libui_shim \
-    libutils_shim
+    libutils_shim \
+    libwvm_shim \
+    libbinder_shim
 
 # Permissions
 PRODUCT_COPY_FILES += \

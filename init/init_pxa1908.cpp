@@ -12,17 +12,9 @@
 #include <sys/_system_properties.h>
 
 #include "vendor_init.h"
-
-#if __has_include(<android-base/logging.h>)
-#include <android-base/logging.h>
-#include <android-base/properties.h>
-#define LOG_ERROR_INIT(msg) LOG(ERROR) << "init: " << msg
-#else
-#include "log.h"
 #include "property_service.h"
+#include "log.h"
 #include "util.h"
-#define LOG_ERROR_INIT(msg) ERROR("init: %s\n", msg)
-#endif
 
 #include "init_pxa1908.h"
 
@@ -51,7 +43,7 @@ static int read_file2(const char *fname, char *data, int max_size)
 
     fd = open(fname, O_RDONLY);
     if (fd < 0) {
-        LOG_ERROR_INIT("failed to open file");
+        ERROR("failed to open '%s'\n", fname);
         return 0;
     }
 
@@ -71,12 +63,25 @@ static void init_alarm_boot_properties()
     char buf[64];
 
     if (read_file2(alarm_file, buf, sizeof(buf))) {
-        const char *val = (buf[0] == '3') ? "true" : "false";
-#if __has_include(<android-base/properties.h>)
-        android::base::SetProperty("ro.alarm_boot", val);
-#else
-        property_set("ro.alarm_boot", val);
-#endif
+        /*
+         * Setup ro.alarm_boot value to true when it is RTC triggered boot up
+         * For existing PMIC chips, the following mapping applies
+         * for the value of boot_reason:
+         *
+         * 0 -> unknown
+         * 1 -> hard reset
+         * 2 -> sudden momentary power loss (SMPL)
+         * 3 -> real time clock (RTC)
+         * 4 -> DC charger inserted
+         * 5 -> USB charger insertd
+         * 6 -> PON1 pin toggled (for secondary PMICs)
+         * 7 -> CBLPWR_N pin toggled (for external power supply)
+         * 8 -> KPDPWR_N pin toggled (power key pressed)
+         */
+        if (buf[0] == '3')
+            property_set("ro.alarm_boot", "true");
+        else
+            property_set("ro.alarm_boot", "false");
     }
 }
 

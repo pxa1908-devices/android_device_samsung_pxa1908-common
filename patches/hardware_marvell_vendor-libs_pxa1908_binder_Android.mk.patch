@@ -1,0 +1,31 @@
+--- a/pxa1908/binder/Android.mk
++++ b/pxa1908/binder/Android.mk
+@@ -1,5 +1,12 @@
+ # Marvell libvndbnd / binder vendor shim
+ # Apply this patch to hardware/marvell/vendor-libs/pxa1908/binder/Android.mk
++#
++# Oreo (android-8.0.0) binder headers (frameworks/native/include/binder/Parcel.h)
++# now #include <android-base/unique_fd.h>.  The Marvell binder tree predates this
++# requirement, so we add libbase to the shared libraries and include paths.
++#
++# To apply:
++#   patch -p1 -d hardware/marvell/vendor-libs < device/samsung/pxa1908-common/patches/hardware_marvell_vendor-libs_pxa1908_binder_Android.mk.patch
+ 
+ LOCAL_PATH := $(call my-dir)
+ 
+@@ -10,9 +17,17 @@ LOCAL_MODULE_TAGS := optional
+ LOCAL_C_INCLUDES := \
+     $(LOCAL_PATH) \
+     device/samsung/pxa1908-common/include \
++    system/core/libbase/include \
+     frameworks/native/include \
+     hardware/libhardware/include
+ 
++LOCAL_CFLAGS += -DBINDER_IPC_32BIT=1
++
+ LOCAL_SHARED_LIBRARIES := \
+     libbinder \
++    libbase \
+     libcutils \
+     liblog \
+     libutils
