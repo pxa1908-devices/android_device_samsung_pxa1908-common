@@ -24,11 +24,6 @@ PRODUCT_FULL_TREBLE_OVERRIDE := false
 PROPERTY_PERMISSIONS_SPLIT := false
 USE_CAMERA_HAL_1 := true
 
-# Inject libbase include path globally so Marvell vendor libs (e.g. libvndbnd)
-# that include binder/Parcel.h can find <android-base/unique_fd.h> from Oreo.
-BOARD_GLOBAL_CFLAGS   += -isystem system/core/libbase/include
-BOARD_GLOBAL_CPPFLAGS += -isystem system/core/libbase/include
-
 TARGET_SYSTEM_PROP := $(COMMON_PATH)/system.prop
 
 # RIL
