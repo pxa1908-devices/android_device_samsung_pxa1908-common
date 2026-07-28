@@ -36,7 +36,7 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.r_submix.default \
     audio.primary.mrvl \
-    audio.usb.default \
+    audio.usb.default
 
 PRODUCT_PACKAGES += libstlport
 
