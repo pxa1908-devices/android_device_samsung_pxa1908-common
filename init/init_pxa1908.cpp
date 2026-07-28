@@ -11,9 +11,10 @@
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
+#include <android-base/logging.h>
+
 #include "vendor_init.h"
 #include "property_service.h"
-#include "log.h"
 #include "util.h"
 
 #include "init_pxa1908.h"
@@ -43,7 +44,7 @@ static int read_file2(const char *fname, char *data, int max_size)
 
     fd = open(fname, O_RDONLY);
     if (fd < 0) {
-        ERROR("failed to open '%s'\n", fname);
+        LOG(ERROR) << "failed to open '" << fname << "'";
         return 0;
     }
 
