@@ -62,4 +62,4 @@ TARGET_UNIFIED_DEVICE := true
 #BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
 
 BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy
--include device/marvell/sepolicy/sepolicy.mk
+#include device/marvell/sepolicy/sepolicy.mk
