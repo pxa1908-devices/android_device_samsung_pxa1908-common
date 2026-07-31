@@ -7,12 +7,13 @@ on init
 on fs
 # mount emmc partitions
     # for e2fsck bad block of /NVM partition before mount
-    exec /system/bin/e2fsck -vy /dev/block/platform/soc.2/by-name/NVM
+    #delegatd to mount_all vid fstab check flag
 
 service marvelltel /system/bin/tel_launch.sh
     class main
+	user root
+    group system radio
     oneshot
-    group system
 
 service at_distributor /system/bin/at_distributor
     class late_start
@@ -27,6 +28,8 @@ service gpslpm_srv /system/bin/gpslpm_srv
 # LPM
 service marvelltel_lpm /system/bin/tel_lpm.sh
     class sec_charger
+	user root
+    group system radio
     oneshot
 
 service ril-daemon2 /system/bin/rild -l /system/lib/libsec-ril-dsds.so -c 2

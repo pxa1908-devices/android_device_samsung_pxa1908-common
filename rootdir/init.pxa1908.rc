@@ -374,6 +374,7 @@ on charger
 service rtccd /system/bin/rtccd3 -a 350m -x 0.5
     class core
     user root
+	group system
     oneshot
 
 # Bluetooth PAN
@@ -384,6 +385,8 @@ service dhcpcd_bt-pan /system/bin/dhcpcd -BKL
 
 service iprenew_bt-pan /system/bin/dhcpcd -n
     class main
+	user root
+    group root wifi system
     disabled
     oneshot
 
@@ -430,6 +433,8 @@ on property:ro.debug_level=0x4f4c
 
 service charger /sbin/healthd -c
     class charger
+	user root
+    group root
     critical
     seclabel u:r:healthd:s0
 #    class_start sec_charger
