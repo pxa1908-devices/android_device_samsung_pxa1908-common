@@ -27,9 +27,6 @@ USE_CAMERA_HAL_1 := true
 TARGET_SYSTEM_PROP := $(COMMON_PATH)/system.prop
 
 # RIL
-BOARD_PROVIDES_LIBRIL := true
-ANDROID_MULTI_SIM := true
-ANDROID_SIM_COUNT_2 := true
 
 # Board specific headers
 # $(COMMON_PATH)/include/android-base/ provides shim headers for
@@ -50,7 +47,6 @@ BOARD_USE_MARVELL_ION := true
 #BOARD_HARDWARE_CLASS += $(COMMON_PATH)/cmhw
 
 # Custom RIL class
-BOARD_RIL_CLASS := ../../../$(COMMON_PATH)/ril_class
 
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
