@@ -4367,34 +4367,7 @@ extern "C" void RIL_setcallbacks (const RIL_RadioFunctions *callbacks) {
     memcpy(&s_callbacks, callbacks, sizeof (RIL_RadioFunctions));
 }
 
-// --- Compat shim for newer rild.c ---------------------------------------
-// This ril.cpp predates AOSP's multi-instance-rild rework (the one that
-// lets a single device run several rild client instances, one per SIM
-// slot, each with its own socket name). The rild.c this tree links
-// against is from after that rework, so it references these symbols
-// unconditionally at startup even though it only *uses* them when a
-// secondary client id ("!= 0") is passed on the command line.
-//
-// These are NOT a real implementation of multi-instance support -- this
-// libril still only ever drives a single RIL_SOCKET_ID/RIL_SOCKET_2/etc.
-// the way it always did via RIL_startEventLoop() below. They exist purely
-// so the newer rild.c has something to link against and to call safely
-// for the single/primary-instance case.
-extern "C" char ril_service_name_base[MAX_SERVICE_NAME_LENGTH] = "rild";
-extern "C" char ril_service_name[MAX_SERVICE_NAME_LENGTH] = "rild";
 
-extern "C" void RIL_setServiceName(const char *name) {
-    if (name != NULL) {
-        strncpy(ril_service_name, name, MAX_SERVICE_NAME_LENGTH - 1);
-        ril_service_name[MAX_SERVICE_NAME_LENGTH - 1] = '\0';
-    }
-}
-
-extern "C" void rilc_thread_pool() {
-    // No-op: this libril already starts its own dispatch thread via
-    // RIL_startEventLoop(); there is no separate rilc thread pool here.
-}
-// --------------------------------------------------------------------
 
 static void startListen(RIL_SOCKET_ID socket_id, SocketListenParam* socket_listen_p) {
     int fdListen = -1;
