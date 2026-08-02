@@ -5,12 +5,7 @@ import init.pxa1908.security.rc
 import init.wifi.rc
 
 on early-init
-    # LD_SHIM_LIBS: Nougat-era shim injection.
-    # On Oreo this environment variable is no longer honoured by the linker;
-    # shims must be declared in /system/etc/ld.config.txt (generated from
-    # PRODUCT_VENDOR_PROPERTIES or BoardConfig).  We keep this export for
-    # Nougat builds and add the Oreo-compatible copy-file path separately.
-    export LD_SHIM_LIBS "/system/lib/libui.so|libui_shim.so:/system/lib/libutils.so|libutils_shim.so:/system/lib/libwvm.so|libwvm_shim.so:/system/lib/libvndbnd.so|libbinder_shim.so"
+    export LD_SHIM_LIBS "/system/lib/libui.so|libui_shim.so:/system/lib/libutils.so|libutils_shim.so:/system/lib/libwvm.so|libwvm_shim.so"
 on init
     symlink /dev/block/platform/soc.2/d4200000.axi/d4281000.sdh/by-name /dev/block/platform/soc.2/by-name
 
