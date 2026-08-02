@@ -211,7 +211,4 @@
 
        <!-- Dont remove For Fixing AutoRotate -->
     <bool name="config_useSystemClockforRotationSensor">true</bool>
-
-    <!-- Whether to enable HumanInteractionController by default -->
-    <bool name="config_HICEnabledDefault">false</bool>
 </resources>
