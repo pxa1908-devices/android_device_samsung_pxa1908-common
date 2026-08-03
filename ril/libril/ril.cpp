@@ -4380,13 +4380,22 @@ extern "C" void RIL_setcallbacks (const RIL_RadioFunctions *callbacks) {
 // the way it always did via RIL_startEventLoop() below. They exist purely
 // so the newer rild.c has something to link against and to call safely
 // for the single/primary-instance case.
-extern "C" char ril_service_name_base[MAX_SERVICE_NAME_LENGTH] = "rild";
-extern "C" char ril_service_name[MAX_SERVICE_NAME_LENGTH] = "rild";
+// This translation unit's resolved <telephony/ril.h> doesn't define
+// MAX_SERVICE_NAME_LENGTH (it's an older/local copy of the header, shadowed
+// ahead of the platform's newer one by this device tree's include order --
+// rild.c, built with different include paths, does see a copy that has it).
+// Rather than depend on a macro that isn't reliably visible here, use a
+// fixed size. It doesn't need to match rild.c's idea of the size: these
+// buffers are only ever written by rild.c's secondary-SIM-instance code
+// path (clientId != "0"), which this single-instance build never takes.
+#define RIL_COMPAT_SERVICE_NAME_LEN 64
+extern "C" char ril_service_name_base[RIL_COMPAT_SERVICE_NAME_LEN] = "rild";
+extern "C" char ril_service_name[RIL_COMPAT_SERVICE_NAME_LEN] = "rild";
 
 extern "C" void RIL_setServiceName(char *name) {
     if (name != NULL) {
-        strncpy(ril_service_name, name, MAX_SERVICE_NAME_LENGTH - 1);
-        ril_service_name[MAX_SERVICE_NAME_LENGTH - 1] = '\0';
+        strncpy(ril_service_name, name, RIL_COMPAT_SERVICE_NAME_LEN - 1);
+        ril_service_name[RIL_COMPAT_SERVICE_NAME_LEN - 1] = '\0';
     }
 }
 
