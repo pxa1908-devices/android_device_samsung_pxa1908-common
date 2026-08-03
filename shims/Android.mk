@@ -30,16 +30,6 @@ LOCAL_MULTILIB          := 32
 
 include $(BUILD_SHARED_LIBRARY)
 
-# ---------------------------------------------------------------------------
-# libwvm_shim — re-export MediaBufferGroup ctor removed in Oreo.
-# ---------------------------------------------------------------------------
-include $(CLEAR_VARS)
-
-LOCAL_SRC_FILES         := wvmshim.cpp
-LOCAL_SHARED_LIBRARIES  := libmedia
-LOCAL_MODULE            := libwvm_shim
-LOCAL_MODULE_TAGS       := optional
-LOCAL_MULTILIB          := 32
 
 include $(BUILD_SHARED_LIBRARY)
 
