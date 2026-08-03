@@ -30,9 +30,6 @@ LOCAL_MULTILIB          := 32
 
 include $(BUILD_SHARED_LIBRARY)
 
-
-include $(BUILD_SHARED_LIBRARY)
-
 # ---------------------------------------------------------------------------
 # libbinder_shim — provides libbase symbols (unique_fd etc.) that
 # Marvell libvndbnd / libbnd vendor libs need when linked against
