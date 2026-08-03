@@ -151,12 +151,10 @@ PRODUCT_PACKAGES += \
 # Shims
 # - libui_shim:      re-exports legacy GraphicBuffer/GraphicBufferMapper symbols
 # - libutils_shim:   re-exports legacy String16 constructors
-# - libwvm_shim:     re-exports legacy MediaBufferGroup ctor
 # - libbinder_shim:  pulls libbase into libvndbnd's resolution scope (Oreo fix)
 PRODUCT_PACKAGES += \
     libui_shim \
     libutils_shim \
-    libwvm_shim \
     libbinder_shim
 
 # Permissions
